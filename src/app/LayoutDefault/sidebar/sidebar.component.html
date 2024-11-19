@@ -1,0 +1,171 @@
+<!-- <div class="sidebar" [class.collapsed]="isCollapsed">
+    <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="pi" [ngClass]="{ 'pi-chevron-left': !isCollapsed, 'pi-chevron-right': isCollapsed }"></i>
+    </button>
+
+    <ul class="menu">
+        <li>
+            <a [routerLink]="'/layout'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="pi pi-home icon"></i>
+                <span *ngIf="!isCollapsed">Inicio</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/layout/perfilUsuario'" routerLinkActive="active">
+                <i class="pi pi-user icon"></i>
+                <span *ngIf="!isCollapsed">Mi perfil</span>
+            </a>
+        </li>
+
+        <ng-container *ngIf="isStudent">
+            <li>
+                <a [routerLink]="'/layout/accesoPPP'" routerLinkActive="active">
+                    <i class="pi pi-briefcase icon"></i>
+                    <span *ngIf="!isCollapsed">Gestionar inicio de PPP</span>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="'/layout/actividades'" routerLinkActive="active">
+                    <i class="pi pi-calendar icon"></i>
+                    <span *ngIf="!isCollapsed">Mis actividades</span>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="'/layout/finalizarPPP'" routerLinkActive="active">
+                    <i class="pi pi-check icon"></i>
+                    <span *ngIf="!isCollapsed">Finalizar PPP</span>
+                </a>
+            </li>
+        </ng-container>
+
+        <ng-container *ngIf="isCoordinatorPPP">
+            <li>
+                <a [routerLink]="'/layout/gestionarPPP'" routerLinkActive="active">
+                    <i class="pi pi-file-edit icon"></i>
+                    <span *ngIf="!isCollapsed">Gestionar y aprobar PPP</span>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="'/layout/consolidado'" routerLinkActive="active">
+                    <i class="pi pi-folder icon"></i>
+                    <span *ngIf="!isCollapsed">Gestionar Consolidado</span>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="'/layout/finalizarPracticas'" routerLinkActive="active">
+                    <i class="pi pi-check icon"></i>
+                    <span *ngIf="!isCollapsed">Finalizar Prácticas</span>
+                </a>
+            </li>
+        </ng-container>
+
+        <ng-container *ngIf="isSupervisor">
+            <li>
+                <a [routerLink]="'/layout/supervisionPPP'" routerLinkActive="active">
+                    <i class="pi pi-eye icon"></i>
+                    <span *ngIf="!isCollapsed">Supervisión PPP</span>
+                </a>
+            </li>
+        </ng-container>
+
+        <ng-container *ngIf="isSecretary">
+            <li>
+                <a [routerLink]="'/layout/solicitudes'" routerLinkActive="active">
+                    <i class="pi pi-inbox icon"></i>
+                    <span *ngIf="!isCollapsed">Solicitudes</span>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="'/layout/gestionDocumentos'" routerLinkActive="active">
+                    <i class="pi pi-file icon"></i>
+                    <span *ngIf="!isCollapsed">Gestión de documentos</span>
+                </a>
+            </li>
+            <li>
+                <a [routerLink]="'/layout/gestionarUsuarios'" routerLinkActive="active">
+                    <i class="pi pi-users icon"></i>
+                    <span *ngIf="!isCollapsed">Gestionar Usuarios</span>
+                </a>
+            </li>
+        </ng-container>
+
+        <li>
+            <a [routerLink]="'/layout/reportes'" routerLinkActive="active">
+                <i class="pi pi-chart-bar icon"></i>
+                <span *ngIf="!isCollapsed">Reportes</span>
+            </a>
+        </li>
+    </ul>
+    <hr class="divider">
+    <ul class="menu">
+        <li>
+            <a [routerLink]="'/layout/notificaciones'" routerLinkActive="active">
+                <i class="pi pi-bell icon"></i>
+                <span *ngIf="!isCollapsed">Notificaciones</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/layout/configuracion'" routerLinkActive="active">
+                <i class="pi pi-cog icon"></i>
+                <span *ngIf="!isCollapsed">Configuración</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/layout/support'" routerLinkActive="active">
+                <i class="pi pi-info-circle icon"></i>
+                <span *ngIf="!isCollapsed">Support</span>
+            </a>
+        </li>
+        <li>
+            <a (click)="logout()">
+                <i class="pi pi-sign-out icon"></i>
+                <span *ngIf="!isCollapsed">Cerrar Sesión</span>
+            </a>
+        </li>
+    </ul>
+</div> -->
+
+
+
+<div class="sidebar" [class.collapsed]="isCollapsed">
+    <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="pi" [ngClass]="{ 'pi-chevron-left': !isCollapsed, 'pi-chevron-right': isCollapsed }"></i>
+    </button>
+    <ul class="menu">
+    
+        <!-- Bloque dinámico para iterar sobre los accesos -->
+      <li *ngFor="let acceso of accesos">
+        <a [routerLink]="acceso.url" routerLinkActive="active">
+            <i class="pi icon" [ngClass]="acceso.icono"></i>
+          <span *ngIf="!isCollapsed">{{ acceso.titulo }}</span>
+        </a>
+        </li>
+    </ul>
+    <hr class="divider">
+    <ul class="menu">
+        <li>
+        <a [routerLink]="'/layout/notificaciones'" routerLinkActive="active">
+            <i class="pi pi-bell icon"></i>
+          <span *ngIf="!isCollapsed">Notificaciones</span>
+        </a>
+        </li>
+        <li>
+        <a [routerLink]="'/layout/configuracion'" routerLinkActive="active">
+            <i class="pi pi-cog icon"></i>
+          <span *ngIf="!isCollapsed">Configuración</span>
+        </a>
+        </li>
+        <li>
+        <a [routerLink]="'/layout/support'" routerLinkActive="active">
+            <i class="pi pi-info-circle icon"></i>
+          <span *ngIf="!isCollapsed">Support</span>
+        </a>
+        </li>
+        <li>
+        <a (click)="logout()">
+            <i class="pi pi-sign-out icon"></i>
+          <span *ngIf="!isCollapsed">Cerrar Sesión</span>
+        </a>
+        </li>
+    </ul>
+</div>

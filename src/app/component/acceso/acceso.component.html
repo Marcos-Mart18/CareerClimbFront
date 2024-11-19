@@ -1,0 +1,19 @@
+
+<p-table [value]="accesos" [tableStyle]="{ 'min-width': '10rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>#</th>
+            <th>Titulo</th>
+            <th>URL</th>
+            <th>IsActive</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-acceso >
+        <tr>
+            <td>{{ acceso.idAcceso }}</td>
+            <td>{{ acceso.titulo }}</td>
+            <td>{{ acceso.url }}</td>
+            <td>{{ acceso.isActive }}</td>
+        </tr>
+    </ng-template>
+</p-table>
