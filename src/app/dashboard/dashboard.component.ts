@@ -35,7 +35,9 @@ export class DashboardComponent {
     return this.authService.hasRole('ROLE_SECRETARIA');
   }
 
-  logout() {
+  Logout() {
     this.authService.logout();
   }
+  
+  
 }

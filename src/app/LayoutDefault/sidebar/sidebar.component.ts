@@ -50,21 +50,7 @@ export class SidebarComponent {
     });
   }
 
-  get isStudent(): boolean {
-    return this.authService.hasRole('ROLE_ESTUDIANTE');
-  }
 
-  get isCoordinatorPPP(): boolean {
-    return this.authService.hasRole('ROLE_COORDINADORPPP');
-  }
-
-  get isSupervisor(): boolean {
-    return this.authService.hasRole('ROLE_SUPERVISOR');
-  }
-
-  get isSecretary(): boolean {
-    return this.authService.hasRole('ROLE_SECRETARIA');
-  }
 
 
   logout() {

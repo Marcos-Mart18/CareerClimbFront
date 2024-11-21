@@ -38,7 +38,6 @@ export class LoginComponent {
   
         if (token) {
           localStorage.setItem('authToken', token); 
-          alert('Su token de acceso fue enviado a su correo registrado');
           this.router.navigate(['/dashboard']); 
         } else {
           this.errorMessage = 'Error: Token no recibido.';
