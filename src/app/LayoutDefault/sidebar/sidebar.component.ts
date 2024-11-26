@@ -95,7 +95,11 @@ export class SidebarComponent {
 
     accesos.forEach((acceso) => {
         if (acceso.accesoPadre) {
-            const padre = accesoMap.get(acceso.accesoPadre.idAcceso);
+            const padreId = typeof acceso.accesoPadre === 'number'
+                ? acceso.accesoPadre
+                : acceso.accesoPadre.idAcceso;
+
+            const padre = accesoMap.get(padreId);
             if (padre) {
                 // Asegurarse de que subAccesos está inicializado
                 padre.subAccesos = padre.subAccesos || [];
@@ -108,6 +112,7 @@ export class SidebarComponent {
 
     return accesosPrincipales;
 }
+
 
 
   /**

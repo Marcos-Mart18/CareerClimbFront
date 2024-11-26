@@ -4,9 +4,9 @@ export class Acceso {
   url: string;
   icono: string;
   isActive: string;
-  accesoPadre?: { idAcceso: number } | null;
-  subAccesos: Acceso[];
-  isExpanded: boolean;
+  accesoPadre?: { idAcceso: number } | number;
+  subAccesos?: Acceso[]; // Opcional
+  isExpanded?: boolean; // Opcional
 
   constructor(
     idAcceso: number,
@@ -14,16 +14,16 @@ export class Acceso {
     url: string,
     icono: string,
     isActive: string,
-    accesoPadre?: { idAcceso: number } | null,
-    subAccesos: Acceso[] = [],
-    isExpanded: boolean = false
+    accesoPadre?: { idAcceso: number } | number,
+    subAccesos?: Acceso[], // Cambiado aquí
+    isExpanded?: boolean // Cambiado aquí
   ) {
     this.idAcceso = idAcceso;
     this.titulo = titulo;
     this.url = url;
     this.icono = icono;
     this.isActive = isActive;
-    this.accesoPadre = accesoPadre ?? null; // Garantiza un valor nulo si no está asignado
+    this.accesoPadre = accesoPadre;
     this.subAccesos = subAccesos;
     this.isExpanded = isExpanded;
   }

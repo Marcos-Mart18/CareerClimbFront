@@ -68,17 +68,27 @@ export class AccesoComponent {
   }
 
   listarAccesosPadres(): void {
-    this.accesoService.getAccesos().subscribe(
-      (data) => {
+    this.accesoService.getAccesos().subscribe({
+      next: (data) => {
         this.opcionesAccesoPadre = data.map((acceso) => ({
           idAcceso: acceso.idAcceso,
           titulo: acceso.titulo,
         }));
       },
-      (error) => {
-        console.error('Error al obtener accesos padres:', error);
-      }
-    );
+      error: (err) => {
+        console.error('Error al obtener accesos padres:', err);
+      },
+    });
+  }
+  
+  
+  
+  actualizarAccesoPadre(idAccesoSeleccionado: number): void {
+    if (idAccesoSeleccionado) {
+      this.acceso.accesoPadre = { idAcceso: idAccesoSeleccionado }; // Asigna solo el ID
+    } else {
+      this.acceso.accesoPadre = undefined; // Maneja el caso en el que no haya selección
+    }
   }
   
   
@@ -150,24 +160,23 @@ export class AccesoComponent {
   }
   
   guardarAcceso(): void {
-    // Crear un objeto simplificado para enviar al backend
-    const accesoParaGuardar: Partial<Acceso> = {
-  idAcceso: this.acceso.idAcceso,
-  titulo: this.acceso.titulo,
-  url: this.acceso.url,
-  icono: this.acceso.icono,
-  isActive: this.acceso.isActive,
-  accesoPadre: this.acceso.accesoPadre ? { idAcceso: this.acceso.accesoPadre.idAcceso } : null,
-};
-delete accesoParaGuardar.subAccesos; 
-delete accesoParaGuardar.isExpanded;
-
+    // Crear una copia para manipular los datos sin afectar el original
+    const accesoParaGuardar = { ...this.acceso };
+  
+    // Validar y transformar accesoPadre si es necesario
+    if (accesoParaGuardar.accesoPadre && typeof accesoParaGuardar.accesoPadre === 'object') {
+      accesoParaGuardar.accesoPadre = accesoParaGuardar.accesoPadre.idAcceso;
+    }
+  
+    // Eliminar atributos innecesarios
+    delete accesoParaGuardar.subAccesos;
+    delete accesoParaGuardar.isExpanded;
   
     console.log('Objeto enviado:', accesoParaGuardar);
   
     const request = this.isEditing
-      ? this.accesoService.editarAcceso(accesoParaGuardar as Acceso)
-      : this.accesoService.crearAcceso(accesoParaGuardar as Acceso);
+      ? this.accesoService.editarAcceso(accesoParaGuardar)
+      : this.accesoService.crearAcceso(accesoParaGuardar);
   
     request.subscribe({
       next: () => {
@@ -180,15 +189,15 @@ delete accesoParaGuardar.isExpanded;
         this.visible = false;
       },
       error: (err) => {
-        console.error('Error al guardar el acceso:', err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Ocurrió un error al guardar el acceso',
-        });
+        console.error('Error al guardar acceso:', err);
       },
     });
   }
+  
+
+
+
+  
   
   
   
