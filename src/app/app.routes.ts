@@ -8,50 +8,86 @@ import { SolicitudComponent } from './component/solicitud/solicitud.component';
 import { PPPComponent } from './component/ppp/ppp.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
+import { InsertarDatosComponent } from './component/insertar-datos/insertar-datos.component';
+import { RolComponent } from './component/rol/rol.component';
+import { CarreraComponent } from './component/carrera/carrera.component';
+import { RubroComponent } from './component/rubro/rubro.component';
+import { CargoComponent } from './component/cargo/cargo.component';
+import { SoliCordComponent } from './compWeb/soli-cord/soli-cord.component';
 
 export const routes: Routes = [
     {
-        path:'',
-        component: LoginComponent,
-        title:'Login'
+    path: '',
+    component: LoginComponent,
+    title: 'Login',
     },
     {
-        path:'solicitud',
-        component: SolicitudComponent,
-        title:'Página solicitud',
-        canActivate: [AuthGuard] 
+        path: 'solicitud',
+    component: SolicitudComponent,
+    title: 'Página solicitud',
+    canActivate: [AuthGuard],
     },
     {
-        path:'ppp',
+        path: 'ppp',
         component: PPPComponent,
-        title:'Página PPP'
+        title: 'Página PPP',
     },
     {
-        path:'dashboard',
-        component: DashboardComponent,
-        title:'Dashboard',
-        // canActivate: [AuthGuard] 
+    path: 'dashboard',
+    component: DashboardComponent,
+    title: 'Dashboard',
+    // canActivate: [AuthGuard]
     },
     {
-        path:'layout',
-        component: LayoutComponent,
-        // canActivate: [AuthGuard] ,
-        children:[
-            {
-                path:'acceso',
-                component: AccesoComponent,
-                title:'Página acceso'
-            },
-            {
-                path:'perfilUsuario',
-                component: PerfilUsuarioComponent,
-                title:'Página PerfilUsuario'
+    path: 'layout',
+    component: LayoutComponent,
+    // canActivate: [AuthGuard] ,
+    children: [
+        {
+        path: 'perfilUsuario',
+        component: PerfilUsuarioComponent,
+        title: 'Página PerfilUsuario',
+        },
+        {
+        path: 'insertarDatos',
+        component: InsertarDatosComponent,
+        title: 'Página InsertarDatos',
+        },
+        {
+        path: 'accesos',
+        component: AccesoComponent,
+        title: 'Página accesos',
+        },
+        {
+            path: 'roles',
+        component: RolComponent,
+        title: 'Página roles',
+        },
+        {
+        path: 'carreras',
+        component: CarreraComponent,
+        title: 'Página carreras',
+        },
+        {
+        path: 'rubros',
+        component: RubroComponent,
+        title: 'Página rubros',
+        },
+        {
+        path: 'cargos',
+        component: CargoComponent,
+        title: 'Página cargos',
+        },
+        {
+                path:'solicitudes-practica',
+                component: SoliCordComponent,
+                title:'Página SolicitudCord'
             }
-        ]
-    },
-    {
-        path:'**',
-        redirectTo:'',
-        pathMatch:'full'
-    }
+    ],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
 ];

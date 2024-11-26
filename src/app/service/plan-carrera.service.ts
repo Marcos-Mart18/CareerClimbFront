@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { PlanCarrera } from '../model/plan-carrera';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlanCarreraService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/plan-carreras';
+  constructor(private http: HttpClient) {}
 
   getPLanCarreras(): Observable<PlanCarrera[]> {
     return this.http.get<PlanCarrera[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class PlanCarreraService {
   crearPLanCarrera(planCarrera: PlanCarrera): Observable<PlanCarrera> {
     return this.http.post<PlanCarrera>(this.apiUrl, planCarrera);
   }
-  editarPLanCarrera(planCarrera: PlanCarrera):Observable<PlanCarrera>{
-    return this.http.post<PlanCarrera>(this.apiUrl,planCarrera);
+  editarPLanCarrera(planCarrera: PlanCarrera): Observable<PlanCarrera> {
+    return this.http.post<PlanCarrera>(this.apiUrl, planCarrera);
   }
   eliminarPLanCarrera(idPlanCarrera: number) {
     return this.http.delete(`${this.apiUrl}/${idPlanCarrera}`);

@@ -29,6 +29,9 @@ get isSupervisor(): boolean {
 
 get isSecretary(): boolean {
   return this.authService.hasRole('ROLE_SECRETARIA');
+  }
+  get isAdmin(): boolean {
+    return this.authService.hasRole('ROLE_ADMIN');
 }
 
   ngOnInit() {

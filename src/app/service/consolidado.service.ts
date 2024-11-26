@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Consolidado } from '../model/consolidado';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConsolidadoService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/consolidados';
+  constructor(private http: HttpClient) {}
 
   getConsolidados(): Observable<Consolidado[]> {
     return this.http.get<Consolidado[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class ConsolidadoService {
   crearConsolidado(consolidado: Consolidado): Observable<Consolidado> {
     return this.http.post<Consolidado>(this.apiUrl, consolidado);
   }
-  editarConsolidado(consolidado: Consolidado):Observable<Consolidado>{
-    return this.http.post<Consolidado>(this.apiUrl,consolidado);
+  editarConsolidado(consolidado: Consolidado): Observable<Consolidado> {
+    return this.http.post<Consolidado>(this.apiUrl, consolidado);
   }
   eliminarConsolidado(idConsolidado: number) {
     return this.http.delete(`${this.apiUrl}/${idConsolidado}`);

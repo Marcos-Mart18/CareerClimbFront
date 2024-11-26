@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { InformePPP } from '../model/informe-ppp';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InformePPPService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/informes-ppp';
+  constructor(private http: HttpClient) {}
 
   getInformePPPs(): Observable<InformePPP[]> {
     return this.http.get<InformePPP[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class InformePPPService {
   crearInformePPP(informeppp: InformePPP): Observable<InformePPP> {
     return this.http.post<InformePPP>(this.apiUrl, informeppp);
   }
-  editarInformePPP(informeppp: InformePPP):Observable<InformePPP>{
-    return this.http.post<InformePPP>(this.apiUrl,informeppp);
+  editarInformePPP(informeppp: InformePPP): Observable<InformePPP> {
+    return this.http.post<InformePPP>(this.apiUrl, informeppp);
   }
   eliminarInformePPP(idInformePPP: number) {
     return this.http.delete(`${this.apiUrl}/${idInformePPP}`);

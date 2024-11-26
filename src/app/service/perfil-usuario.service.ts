@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { PerfilUsuario } from '../model/perfil-usuario';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PerfilUsuarioService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/perfiles-usuario';
+  constructor(private http: HttpClient) {}
 
   getPerfilUsuarios(): Observable<PerfilUsuario[]> {
     return this.http.get<PerfilUsuario[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class PerfilUsuarioService {
   crearPerfilUsuario(perfilUsuario: PerfilUsuario): Observable<PerfilUsuario> {
     return this.http.post<PerfilUsuario>(this.apiUrl, perfilUsuario);
   }
-  editarPerfilUsuario(perfilUsuario: PerfilUsuario):Observable<PerfilUsuario>{
-    return this.http.post<PerfilUsuario>(this.apiUrl,perfilUsuario);
+  editarPerfilUsuario(perfilUsuario: PerfilUsuario): Observable<PerfilUsuario> {
+    return this.http.post<PerfilUsuario>(this.apiUrl, perfilUsuario);
   }
   eliminarPerfilUsuario(idPerfilUsuario: number) {
     return this.http.delete(`${this.apiUrl}/${idPerfilUsuario}`);

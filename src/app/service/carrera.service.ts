@@ -4,25 +4,25 @@ import { Carrera } from '../model/carrera';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarreraService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/carreras';
+  constructor(private http: HttpClient) {}
 
-  getCarreras():Observable<Carrera[]>{
+  getCarreras(): Observable<Carrera[]> {
     return this.http.get<Carrera[]>(this.apiUrl);
   }
-  getCarreraById(idCarrera:number):Observable<Carrera>{
+  getCarreraById(idCarrera: number): Observable<Carrera> {
     return this.http.get<Carrera>(`${this.apiUrl}/${idCarrera}`);
   }
-  crearCarrera(carrera: Carrera):Observable<Carrera>{
-    return this.http.post<Carrera>(this.apiUrl,carrera);
+  crearCarrera(carrera: Carrera): Observable<Carrera> {
+    return this.http.post<Carrera>(this.apiUrl, carrera);
   }
-  editarCarrera(carrera: Carrera):Observable<Carrera>{
-    return this.http.post<Carrera>(this.apiUrl,carrera);
+  editarCarrera(carrera: Carrera): Observable<Carrera> {
+    return this.http.post<Carrera>(this.apiUrl, carrera);
   }
-  eliminarCarrera(idCarrera: number){
+  eliminarCarrera(idCarrera: number) {
     return this.http.delete(`${this.apiUrl}/${idCarrera}`);
   }
 }

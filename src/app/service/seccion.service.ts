@@ -4,12 +4,11 @@ import { Observable } from 'rxjs';
 import { Seccion } from '../model/seccion';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SeccionService {
-
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/secciones';
+  constructor(private http: HttpClient) {}
 
   getSecciones(): Observable<Seccion[]> {
     return this.http.get<Seccion[]>(this.apiUrl);
@@ -20,8 +19,8 @@ export class SeccionService {
   crearSeccion(seccion: Seccion): Observable<Seccion> {
     return this.http.post<Seccion>(this.apiUrl, seccion);
   }
-  editarSeccion(seccion: Seccion):Observable<Seccion>{
-    return this.http.post<Seccion>(this.apiUrl,seccion);
+  editarSeccion(seccion: Seccion): Observable<Seccion> {
+    return this.http.post<Seccion>(this.apiUrl, seccion);
   }
   eliminarSeccion(idSeccion: number) {
     return this.http.delete(`${this.apiUrl}/${idSeccion}`);

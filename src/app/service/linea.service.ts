@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Linea } from '../model/linea';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LineaService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/lineas';
+  constructor(private http: HttpClient) {}
 
   getLineas(): Observable<Linea[]> {
     return this.http.get<Linea[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class LineaService {
   crearLinea(linea: Linea): Observable<Linea> {
     return this.http.post<Linea>(this.apiUrl, linea);
   }
-  editarLinea(linea: Linea):Observable<Linea>{
-    return this.http.post<Linea>(this.apiUrl,linea);
+  editarLinea(linea: Linea): Observable<Linea> {
+    return this.http.post<Linea>(this.apiUrl, linea);
   }
   eliminarLinea(idLinea: number) {
     return this.http.delete(`${this.apiUrl}/${idLinea}`);

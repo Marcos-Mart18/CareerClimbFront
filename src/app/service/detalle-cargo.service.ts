@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { DetalleCargo } from '../model/detalle-cargo';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DetalleCargoService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/detalle-cargos';
+  constructor(private http: HttpClient) {}
 
   getDetalleCargos(): Observable<DetalleCargo[]> {
     return this.http.get<DetalleCargo[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class DetalleCargoService {
   crearDetalleCargo(detallecargo: DetalleCargo): Observable<DetalleCargo> {
     return this.http.post<DetalleCargo>(this.apiUrl, detallecargo);
   }
-  editarDetalleCargo(detallecargo: DetalleCargo):Observable<DetalleCargo>{
-    return this.http.post<DetalleCargo>(this.apiUrl,detallecargo);
+  editarDetalleCargo(detallecargo: DetalleCargo): Observable<DetalleCargo> {
+    return this.http.post<DetalleCargo>(this.apiUrl, detallecargo);
   }
   eliminarDetalleCargo(idDetalleCargo: number) {
     return this.http.delete(`${this.apiUrl}/${idDetalleCargo}`);

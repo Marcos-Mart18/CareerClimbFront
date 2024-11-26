@@ -34,5 +34,11 @@
                 <p>PORTAL SECRETARIA</p>
             </div>
         </ng-container>
+        <ng-container *ngIf="isAdmin">
+            <div class="practice-module" [routerLink]="'/layout'">
+                <i class="pi pi-users" style="font-size: 7.5rem"></i>
+                <p>PORTAL ADMIN</p>
+            </div>
+        </ng-container>
     </div>
 </div>

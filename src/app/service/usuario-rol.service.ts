@@ -4,12 +4,11 @@ import { Observable } from 'rxjs';
 import { UsuarioRol } from '../model/usuario-rol';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioRolService {
-
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/usuario-roles';
+  constructor(private http: HttpClient) {}
 
   getUsuarioRoles(): Observable<UsuarioRol[]> {
     return this.http.get<UsuarioRol[]>(this.apiUrl);
@@ -20,8 +19,8 @@ export class UsuarioRolService {
   crearUsuarioRol(usuarioRol: UsuarioRol): Observable<UsuarioRol> {
     return this.http.post<UsuarioRol>(this.apiUrl, usuarioRol);
   }
-  editarUsuarioRol(usuarioRol: UsuarioRol):Observable<UsuarioRol>{
-    return this.http.post<UsuarioRol>(this.apiUrl,usuarioRol);
+  editarUsuarioRol(usuarioRol: UsuarioRol): Observable<UsuarioRol> {
+    return this.http.post<UsuarioRol>(this.apiUrl, usuarioRol);
   }
   eliminarUsuarioRol(idUsuarioRol: number) {
     return this.http.delete(`${this.apiUrl}/${idUsuarioRol}`);

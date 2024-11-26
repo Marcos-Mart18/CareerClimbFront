@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Acceso } from '../model/acceso';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccesoService {
-  private apiUrl ='http://localhost:8080/api/accesos';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/accesos';
+  constructor(private http: HttpClient) {}
 
   getAccesos(): Observable<Acceso[]> {
     return this.http.get<Acceso[]>(this.apiUrl);
@@ -19,9 +19,10 @@ export class AccesoService {
   crearAcceso(acceso: Acceso): Observable<Acceso> {
     return this.http.post<Acceso>(this.apiUrl, acceso);
   }
-  editarAcceso(acceso: Acceso):Observable<Acceso>{
-    return this.http.post<Acceso>(this.apiUrl,acceso);
+  editarAcceso(acceso: Acceso): Observable<Acceso> {
+    return this.http.put<Acceso>(`${this.apiUrl}/${acceso.idAcceso}`, acceso);
   }
+  
   eliminarAcceso(idAcceso: number) {
     return this.http.delete(`${this.apiUrl}/${idAcceso}`);
   }

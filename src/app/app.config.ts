@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -15,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     MessageService,
+    ConfirmationService,
     provideAnimations(),
     provideAnimationsAsync(),
     { provide: JWT_OPTIONS, useValue: {} },

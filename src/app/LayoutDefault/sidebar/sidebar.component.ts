@@ -2,8 +2,8 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterLink, RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
-import { AccesoService } from '../../service/acceso.service';
 import { Acceso } from '../../model/acceso';
+import { AccesoService } from '../../service/acceso.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -66,15 +66,16 @@ export class SidebarComponent {
    */
   obtenerAccesosPorRol(rol: string): void {
     this.accesoService.getAccesosPorRol(rol).subscribe({
-      next: (data) => {
+      next: (data: Acceso[]) => { // Tipado explícito para 'data'
         this.accesos = this.organizarAccesos(data);
         console.log('Accesos obtenidos:', this.accesos);
       },
-      error: (err) => {
+      error: (err: any) => { // Tipado explícito para 'err'
         console.error('Error al obtener accesos por rol:', err);
       },
     });
   }
+  
 
   /**
    * Organiza la estructura jerárquica de accesos para asegurar que los subaccesos se asocien correctamente.
@@ -86,25 +87,28 @@ export class SidebarComponent {
 
     // Crear un mapa de accesos por ID
     accesos.forEach((acceso) => {
-      acceso.subAccesos = []; // Inicializa el arreglo de subAccesos
-      accesoMap.set(acceso.idAcceso, acceso);
+        acceso.subAccesos = []; // Inicializa el arreglo de subAccesos
+        accesoMap.set(acceso.idAcceso, acceso);
     });
 
     const accesosPrincipales: Acceso[] = [];
 
     accesos.forEach((acceso) => {
-      if (acceso.accesoPadre) {
-        const padre = accesoMap.get(acceso.accesoPadre.idAcceso);
-        if (padre) {
-          padre.subAccesos.push(acceso); // Agrega el subacceso al padre
+        if (acceso.accesoPadre) {
+            const padre = accesoMap.get(acceso.accesoPadre.idAcceso);
+            if (padre) {
+                // Asegurarse de que subAccesos está inicializado
+                padre.subAccesos = padre.subAccesos || [];
+                padre.subAccesos.push(acceso); // Agrega el subacceso al padre
+            }
+        } else {
+            accesosPrincipales.push(acceso); // Es un acceso principal
         }
-      } else {
-        accesosPrincipales.push(acceso); // Es un acceso principal
-      }
     });
 
     return accesosPrincipales;
-  }
+}
+
 
   /**
    * Cierra sesión y redirige al login.

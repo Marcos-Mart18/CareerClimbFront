@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Subir Archivo Excel</h2>
+
+  <form (submit)="onUpload($event)" class="upload-form">
+    <div class="form-group">
+      <label for="fileInput">Seleccionar archivo:</label>
+      <hr />
+      <input
+        id="fileInput"
+        type="file"
+        (change)="onFileSelected($event)"
+        accept=".xlsx, .xls"
+        class="file-input"
+      />
+    </div>
+
+    <button type="submit" [disabled]="!selectedFile" class="upload-button">
+      Subir Archivo
+    </button>
+  </form>
+
+  <div *ngIf="uploadSuccess" class="success-message">
+    <p>✔ Archivo subido exitosamente.</p>
+  </div>
+
+  <div *ngIf="uploadError" class="error-message">
+    <p>✖ Hubo un error al subir el archivo. Inténtalo de nuevo.</p>
+  </div>
+</div>

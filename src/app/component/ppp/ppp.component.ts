@@ -8,11 +8,12 @@ import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { SolicitudComponent } from '../solicitud/solicitud.component';
 
 @Component({
   selector: 'app-ppp',
   standalone: true,
-  imports: [NavbarComponent,NgIf,ButtonModule,RouterLink,NgFor,DialogModule,ReactiveFormsModule,InputTextModule],
+  imports: [NavbarComponent,SolicitudComponent,NgIf,ButtonModule,RouterLink,NgFor,DialogModule,ReactiveFormsModule,InputTextModule],
   templateUrl: './ppp.component.html',
   styleUrl: './ppp.component.css'
 })

@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PPPLinea } from '../model/ppplinea';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PPPLineaService {
-
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/ppp-lineas';
+  constructor(private http: HttpClient) {}
 
   getPPPLineas(): Observable<PPPLinea[]> {
     return this.http.get<PPPLinea[]>(this.apiUrl);
@@ -19,8 +18,8 @@ export class PPPLineaService {
   crearPPPLinea(ppplinea: PPPLinea): Observable<PPPLinea> {
     return this.http.post<PPPLinea>(this.apiUrl, ppplinea);
   }
-  editarPPPLinea(ppplinea: PPPLinea):Observable<PPPLinea>{
-    return this.http.post<PPPLinea>(this.apiUrl,ppplinea);
+  editarPPPLinea(ppplinea: PPPLinea): Observable<PPPLinea> {
+    return this.http.post<PPPLinea>(this.apiUrl, ppplinea);
   }
   eliminarPPPLinea(idPPPLinea: number) {
     return this.http.delete(`${this.apiUrl}/${idPPPLinea}`);

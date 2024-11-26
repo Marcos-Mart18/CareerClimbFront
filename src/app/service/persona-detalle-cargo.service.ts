@@ -4,23 +4,37 @@ import { Observable } from 'rxjs';
 import { PersonaDetalleCargo } from '../model/persona-detalle-cargo';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PersonaDetalleCargoService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/persona-detalle-cargo';
+  constructor(private http: HttpClient) {}
 
   getPersonaDetalleCargos(): Observable<PersonaDetalleCargo[]> {
     return this.http.get<PersonaDetalleCargo[]>(this.apiUrl);
   }
-  getpersonaDetalleCargoById(idPersonaDetalleCargo: number): Observable<PersonaDetalleCargo> {
-    return this.http.get<PersonaDetalleCargo>(`${this.apiUrl}/${idPersonaDetalleCargo}`);
+  getpersonaDetalleCargoById(
+    idPersonaDetalleCargo: number
+  ): Observable<PersonaDetalleCargo> {
+    return this.http.get<PersonaDetalleCargo>(
+      `${this.apiUrl}/${idPersonaDetalleCargo}`
+    );
   }
-  crearpersonaDetalleCargo(personaDetalleCargo: PersonaDetalleCargo): Observable<PersonaDetalleCargo> {
-    return this.http.post<PersonaDetalleCargo>(this.apiUrl, personaDetalleCargo);
+  crearpersonaDetalleCargo(
+    personaDetalleCargo: PersonaDetalleCargo
+  ): Observable<PersonaDetalleCargo> {
+    return this.http.post<PersonaDetalleCargo>(
+      this.apiUrl,
+      personaDetalleCargo
+    );
   }
-  editarpersonaDetalleCargo(personaDetalleCargo: PersonaDetalleCargo):Observable<PersonaDetalleCargo>{
-    return this.http.post<PersonaDetalleCargo>(this.apiUrl,personaDetalleCargo);
+  editarpersonaDetalleCargo(
+    personaDetalleCargo: PersonaDetalleCargo
+  ): Observable<PersonaDetalleCargo> {
+    return this.http.post<PersonaDetalleCargo>(
+      this.apiUrl,
+      personaDetalleCargo
+    );
   }
   eliminarpersonaDetalleCargo(idPersonaDetalleCargo: number) {
     return this.http.delete(`${this.apiUrl}/${idPersonaDetalleCargo}`);

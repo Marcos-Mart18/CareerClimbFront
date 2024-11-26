@@ -4,23 +4,31 @@ import { Observable } from 'rxjs';
 import { DetalleEvaluacion } from '../model/detalle-evaluacion';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DetalleEvaluacionService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/detalle-evaluaciones';
+  constructor(private http: HttpClient) {}
 
   getDetalleEvaluaciones(): Observable<DetalleEvaluacion[]> {
     return this.http.get<DetalleEvaluacion[]>(this.apiUrl);
   }
-  getDetalleEvaluacionById(idDetalleEvaluacion: number): Observable<DetalleEvaluacion> {
-    return this.http.get<DetalleEvaluacion>(`${this.apiUrl}/${idDetalleEvaluacion}`);
+  getDetalleEvaluacionById(
+    idDetalleEvaluacion: number
+  ): Observable<DetalleEvaluacion> {
+    return this.http.get<DetalleEvaluacion>(
+      `${this.apiUrl}/${idDetalleEvaluacion}`
+    );
   }
-  crearDetalleEvaluacion(detalleevaluacion: DetalleEvaluacion): Observable<DetalleEvaluacion> {
+  crearDetalleEvaluacion(
+    detalleevaluacion: DetalleEvaluacion
+  ): Observable<DetalleEvaluacion> {
     return this.http.post<DetalleEvaluacion>(this.apiUrl, detalleevaluacion);
   }
-  editarDetalleEvaluacion(detalleevaluacion: DetalleEvaluacion):Observable<DetalleEvaluacion>{
-    return this.http.post<DetalleEvaluacion>(this.apiUrl,detalleevaluacion);
+  editarDetalleEvaluacion(
+    detalleevaluacion: DetalleEvaluacion
+  ): Observable<DetalleEvaluacion> {
+    return this.http.post<DetalleEvaluacion>(this.apiUrl, detalleevaluacion);
   }
   eliminarDetalleEvaluacion(idDetalleEvaluacion: number) {
     return this.http.delete(`${this.apiUrl}/${idDetalleEvaluacion}`);

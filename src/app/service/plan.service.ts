@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Plan } from '../model/plan';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlanService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/planes';
+  constructor(private http: HttpClient) {}
 
   getPlanes(): Observable<Plan[]> {
     return this.http.get<Plan[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class PlanService {
   crearPlan(plan: Plan): Observable<Plan> {
     return this.http.post<Plan>(this.apiUrl, plan);
   }
-  editarPlan(plan: Plan):Observable<Plan>{
-    return this.http.post<Plan>(this.apiUrl,plan);
+  editarPlan(plan: Plan): Observable<Plan> {
+    return this.http.post<Plan>(this.apiUrl, plan);
   }
   eliminarPlan(idPlan: number) {
     return this.http.delete(`${this.apiUrl}/${idPlan}`);

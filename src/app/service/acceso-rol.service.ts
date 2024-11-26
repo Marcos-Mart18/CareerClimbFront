@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { AccesoRol } from '../model/acceso-rol';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccesoRolService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/accesos-rol';
+  constructor(private http: HttpClient) {}
 
   getAccesoRoles(): Observable<AccesoRol[]> {
     return this.http.get<AccesoRol[]>(this.apiUrl);
@@ -16,11 +16,11 @@ export class AccesoRolService {
   getAccesoRolById(idAccesoRol: number): Observable<AccesoRol> {
     return this.http.get<AccesoRol>(`${this.apiUrl}/${idAccesoRol}`);
   }
-  crearAccesoRol(acceso: AccesoRol): Observable<AccesoRol> {
-    return this.http.post<AccesoRol>(this.apiUrl, acceso);
+  crearAccesoRol(AccesoRol: AccesoRol): Observable<AccesoRol> {
+    return this.http.post<AccesoRol>(this.apiUrl, AccesoRol);
   }
-  editarAccesoRol(acceso: AccesoRol):Observable<AccesoRol>{
-    return this.http.post<AccesoRol>(this.apiUrl,acceso);
+  editarAccesoRol(AccesoRol: AccesoRol): Observable<AccesoRol> {
+    return this.http.post<AccesoRol>(this.apiUrl, AccesoRol);
   }
   eliminarAccesoRol(idAccesoRol: number) {
     return this.http.delete(`${this.apiUrl}/${idAccesoRol}`);

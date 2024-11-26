@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Img } from '../model/img';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImgService {
-  private apiUrl ='http://localhost:8080/api/v1/carrera';
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080/api/imgs';
+  constructor(private http: HttpClient) {}
 
   getImgs(): Observable<Img[]> {
     return this.http.get<Img[]>(this.apiUrl);
@@ -19,8 +19,8 @@ export class ImgService {
   crearImg(img: Img): Observable<Img> {
     return this.http.post<Img>(this.apiUrl, img);
   }
-  editarImg(img: Img):Observable<Img>{
-    return this.http.post<Img>(this.apiUrl,img);
+  editarImg(img: Img): Observable<Img> {
+    return this.http.post<Img>(this.apiUrl, img);
   }
   eliminarImg(idImg: number) {
     return this.http.delete(`${this.apiUrl}/${idImg}`);
