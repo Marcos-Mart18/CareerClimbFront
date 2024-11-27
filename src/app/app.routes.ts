@@ -14,6 +14,9 @@ import { CarreraComponent } from './component/carrera/carrera.component';
 import { RubroComponent } from './component/rubro/rubro.component';
 import { CargoComponent } from './component/cargo/cargo.component';
 import { SoliCordComponent } from './compWeb/soli-cord/soli-cord.component';
+import { ConsolidadoComponent } from './component/consolidado/consolidado.component';
+import { ImgPerfilComponent } from './component/img-perfil/img-perfil.component';
+import { GestionAccesosRolesComponent } from './component/gestion-accesos-roles/gestion-accesos-roles.component';
 
 export const routes: Routes = [
     {
@@ -43,11 +46,6 @@ export const routes: Routes = [
     component: LayoutComponent,
     // canActivate: [AuthGuard] ,
     children: [
-        {
-        path: 'perfilUsuario',
-        component: PerfilUsuarioComponent,
-        title: 'Página PerfilUsuario',
-        },
         {
         path: 'insertarDatos',
         component: InsertarDatosComponent,
@@ -79,15 +77,30 @@ export const routes: Routes = [
         title: 'Página cargos',
         },
         {
-                path:'solicitudes-practica',
-                component: SoliCordComponent,
-                title:'Página SolicitudCord'
-            }
+        path:'solicitudes-practica',
+        component: SoliCordComponent,
+        title:'Página SolicitudCord'
+        },
+        {
+        path:'consolidado',
+        component: ConsolidadoComponent,
+        title:'Página consolidado'
+        },
+        {
+        path:'perfilUsuario',
+        component: ImgPerfilComponent,
+        title:'Página Perfil'
+        },
+        {
+            path: 'gestionPermisos',
+            component: GestionAccesosRolesComponent,
+        title: 'Página Gestion de Permisos',
+        }
     ],
-  },
-  {
+},
+{
     path: '**',
     redirectTo: '',
     pathMatch: 'full',
-  },
+},
 ];

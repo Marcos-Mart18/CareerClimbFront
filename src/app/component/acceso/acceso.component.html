@@ -106,18 +106,18 @@
   <div class="flex align-items-center gap-3 mb-3">
     <label for="accesoPadre" class="font-semibold w-6rem">Acceso Padre:</label>
     <p-dropdown
-    [(ngModel)]="acceso.accesoPadre"
-    [options]="opcionesAccesoPadre"
-    optionLabel="titulo"
-    dataKey="idAcceso" 
-    placeholder="Seleccione acceso"
-    id="accesoPadre"
-    name="accesoPadre"
-    class="flex-auto"
-    [style]="{ width: '100%' }"
-    [panelStyle]="{ 'max-height': '150px', 'overflow-y': 'auto' }"
-    (onChange)="actualizarAccesoPadre($event.value)"
+  [(ngModel)]="selectedAccesoPadreId"
+  [options]="opcionesAccesoPadre"
+  optionLabel="titulo"
+  optionValue="idAcceso"
+  placeholder="Seleccione acceso"
+  id="accesoPadre"
+  name="accesoPadre"
+  class="flex-auto"
+  [style]="{ width: '100%' }"
+  [panelStyle]="{ 'max-height': '150px', 'overflow-y': 'auto' }"
 ></p-dropdown>
+
     </div>
 
 

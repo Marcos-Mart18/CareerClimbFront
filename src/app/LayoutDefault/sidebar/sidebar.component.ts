@@ -84,34 +84,36 @@ export class SidebarComponent {
    */
   private organizarAccesos(accesos: Acceso[]): Acceso[] {
     const accesoMap = new Map<number, Acceso>();
-
+  
     // Crear un mapa de accesos por ID
     accesos.forEach((acceso) => {
-        acceso.subAccesos = []; // Inicializa el arreglo de subAccesos
-        accesoMap.set(acceso.idAcceso, acceso);
+      acceso.subAccesos = []; // Inicializa el arreglo de subAccesos
+      accesoMap.set(acceso.idAcceso, acceso);
     });
-
+  
     const accesosPrincipales: Acceso[] = [];
-
+  
     accesos.forEach((acceso) => {
-        if (acceso.accesoPadre) {
-            const padreId = typeof acceso.accesoPadre === 'number'
-                ? acceso.accesoPadre
-                : acceso.accesoPadre.idAcceso;
-
-            const padre = accesoMap.get(padreId);
-            if (padre) {
-                // Asegurarse de que subAccesos está inicializado
-                padre.subAccesos = padre.subAccesos || [];
-                padre.subAccesos.push(acceso); // Agrega el subacceso al padre
-            }
-        } else {
-            accesosPrincipales.push(acceso); // Es un acceso principal
+      if (acceso.accesoPadre) {
+        const padreId = typeof acceso.accesoPadre === 'number'
+          ? acceso.accesoPadre
+          : acceso.accesoPadre.idAcceso;
+  
+        const padre = accesoMap.get(padreId);
+        if (padre) {
+          padre.subAccesos = padre.subAccesos || [];
+          padre.subAccesos.push(acceso);
+          padre.subAccesos.sort((a, b) => a.idAcceso - b.idAcceso); // Ordenar subAccesos por idAcceso
         }
+      } else {
+        accesosPrincipales.push(acceso);
+      }
     });
-
-    return accesosPrincipales;
-}
+  
+    // Ordenar accesos principales antes de devolver
+    return accesosPrincipales.sort((a, b) => a.idAcceso - b.idAcceso);
+  }
+  
 
 
 

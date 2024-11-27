@@ -42,6 +42,7 @@ export class AccesoComponent {
   // accesosRoles: AccesoRol[] = [];
   acceso: Acceso = new Acceso(0, '', '', '', 'A', undefined, [], false);
   opcionesAccesoPadre: { idAcceso: number; titulo: string }[] = [];
+  selectedAccesoPadreId: number | null = null;
   // accesoRol: AccesoRol = new AccesoRol();
   // rol: Rol = new Rol(0, '', '');
   visible: boolean = false;
@@ -108,9 +109,11 @@ export class AccesoComponent {
 
   showDialogCreate(): void {
     this.visible = true;
-    this.acceso = new Acceso(0, '', '', '', 'A'); // Inicializa con estado activo
+    this.acceso = new Acceso(0, '', '', '', 'A', null, [], false);
+    this.selectedAccesoPadreId = null; // Ningún acceso padre seleccionado
     this.isEditing = false;
   }
+  
 
   showDialogEdit(id: number): void {
     this.accesoService.getAccesoById(id).subscribe({
@@ -121,16 +124,18 @@ export class AccesoComponent {
           data.url,
           data.icono,
           data.isActive,
-          data.accesoPadre, // Mapear el acceso padre correctamente
-          data.subAccesos || [], // Asegurar que los subaccesos sean un array
+          data.accesoPadre ? { idAcceso: data.accesoPadre.idAcceso } : null,
+          data.subAccesos || [],
           data.isExpanded
         );
+        this.selectedAccesoPadreId = data.accesoPadre?.idAcceso || null; // Asigna el ID del padre
         this.visible = true;
         this.isEditing = true;
       },
       error: (error) => console.error('Error al cargar el acceso:', error),
     });
   }
+  
   
 
   deleteAcceso(id: number): void {
@@ -160,13 +165,12 @@ export class AccesoComponent {
   }
   
   guardarAcceso(): void {
-    // Crear una copia para manipular los datos sin afectar el original
     const accesoParaGuardar = { ...this.acceso };
   
-    // Validar y transformar accesoPadre si es necesario
-    if (accesoParaGuardar.accesoPadre && typeof accesoParaGuardar.accesoPadre === 'object') {
-      accesoParaGuardar.accesoPadre = accesoParaGuardar.accesoPadre.idAcceso;
-    }
+    // Validar y transformar accesoPadre
+    accesoParaGuardar.accesoPadre = this.selectedAccesoPadreId
+      ? { idAcceso: this.selectedAccesoPadreId }
+      : null; // Asignar null si no hay selección
   
     // Eliminar atributos innecesarios
     delete accesoParaGuardar.subAccesos;
@@ -174,6 +178,7 @@ export class AccesoComponent {
   
     console.log('Objeto enviado:', accesoParaGuardar);
   
+    // Determina si se está editando o creando
     const request = this.isEditing
       ? this.accesoService.editarAcceso(accesoParaGuardar)
       : this.accesoService.crearAcceso(accesoParaGuardar);
@@ -185,28 +190,21 @@ export class AccesoComponent {
           summary: 'Correcto',
           detail: this.isEditing ? 'Acceso actualizado' : 'Acceso creado',
         });
-        this.listarAccesos();
-        this.visible = false;
+        this.listarAccesos(); // Refresca la lista de accesos
+        this.visible = false; // Cierra el diálogo
       },
       error: (err) => {
         console.error('Error al guardar acceso:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Ocurrió un error al guardar el acceso',
+        });
       },
     });
   }
   
+  
 
-
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 }
