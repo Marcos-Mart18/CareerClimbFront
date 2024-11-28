@@ -1,29 +1,78 @@
 <div class="container">
-  <h2>Subir Archivo Excel</h2>
+  <h2 class="title">📂 Cargar datos por Excel</h2>
 
-  <form (submit)="onUpload($event)" class="upload-form">
-    <div class="form-group">
-      <label for="fileInput">Seleccionar archivo:</label>
-      <hr />
-      <input
-        id="fileInput"
-        type="file"
-        (change)="onFileSelected($event)"
-        accept=".xlsx, .xls"
-        class="file-input"
-      />
-    </div>
+  <p-fileUpload
+    name="file"
+    [customUpload]="true"
+    [accept]="'.xlsx,.xls'"
+    [auto]="false"
+    (onSelect)="onFileSelected($event)"
+    (onClear)="onClearFiles()"
+  >
+    <!-- Cabecera personalizada -->
+    <ng-template
+      pTemplate="header"
+      let-chooseCallback="chooseCallback"
+      let-clearCallback="clearCallback"
+    >
+      <div>
+        <p>
+          Seleccione un documento o arraste y suelte el documento en la parte de
+          abajo
+        </p>
+      </div>
+      <div class="file-upload-header">
+        <button
+          pButton
+          type="button"
+          label="Buscar Documento"
+          icon="pi pi-plus"
+          class="upload-button"
+          (click)="chooseCallback()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          class="upload-button"
+          (click)="clearCallback()"
+        ></button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="empty">
+      <div class="empty-dropzone">
+        <i class="pi pi-cloud-upload text-4xl"></i>
+        <p>Arrastra y suelta tu archivo aquí</p>
+      </div>
+    </ng-template>
 
-    <button type="submit" [disabled]="!selectedFile" class="upload-button">
-      Subir Archivo
-    </button>
-  </form>
+    <ng-template pTemplate="content" let-files>
+      <div *ngFor="let file of files" class="file-item">
+        <i class="pi pi-file-excel file-icon"></i>
+        <span class="file-name">{{ file.name }}</span>
+        <span class="file-size">{{ formatSize(file.size) }}</span>
+      </div>
+    </ng-template>
+  </p-fileUpload>
 
+  <button
+    pButton
+    type="button"
+    label="Subir Archivo"
+    icon="pi pi-upload"
+    [disabled]="!selectedFile"
+    class="upload-button"
+    (click)="startUpload()"
+  ></button>
+
+  <!-- Mensaje de éxito -->
   <div *ngIf="uploadSuccess" class="success-message">
     <p>✔ Archivo subido exitosamente.</p>
   </div>
 
-  <div *ngIf="uploadError" class="error-message">
-    <p>✖ Hubo un error al subir el archivo. Inténtalo de nuevo.</p>
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMessage" class="error-message">
+    <p>✖ {{ errorMessage }}</p>
   </div>
 </div>
