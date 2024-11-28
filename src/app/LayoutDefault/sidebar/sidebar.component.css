@@ -116,21 +116,20 @@
   color: #a3b1c2;
 }
 
-/* Nuevos estilos añadidos del Código 1 */
 
 .acceso-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  padding: 8px 0; /* Ajuste de padding para alineación */
+  padding: 8px 0; 
   border-radius: 4px;
   transition: background-color 0.3s;
 }
 
 .submenu {
   list-style: none;
-  padding-left: 20px; /* Indentar los subaccesos */
+  padding-left: 20px; 
   margin: 0;
 }
 

@@ -2,7 +2,6 @@
   class="flex justify-content-center align-items-center flex-column"
   style="margin: 20px"
 >
-  <!-- Botón para Crear -->
   <button
     pButton
     pRipple
@@ -12,7 +11,6 @@
     (click)="showDialogCreate()"
   ></button>
 
-  <!-- Tabla de Datos -->
   <p-table
     [value]="accesos"
     [tableStyle]="{ 'min-width': '10rem' }"
@@ -38,7 +36,6 @@
         <td>{{ acceso.isActive === "A" ? "Sí" : "No" }}</td>
         <td>{{ acceso.accesoPadre?.titulo || 'Sin Padre' }}</td>
         <td>
-          <!-- Botón Editar -->
           <button
             pButton
             pRipple
@@ -47,7 +44,6 @@
             class="p-button-rounded"
             (click)="showDialogEdit(acceso.idAcceso)"
           ></button>
-          <!-- Botón Eliminar -->
           <button
             pButton
             pRipple
@@ -62,7 +58,6 @@
   </p-table>
 </div>
 
-<!-- Diálogo para Crear/Editar -->
 <p-dialog
   header="{{ isEditing ? 'Editar Acceso' : 'Crear Acceso' }}"
   [modal]="true"

@@ -15,7 +15,6 @@ export class DashboardComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // Obtiene el nombre completo desde el token
     this.fullName = this.authService.getFullName();
 }
 

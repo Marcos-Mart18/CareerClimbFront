@@ -13,9 +13,9 @@ import { AccesoService } from '../../service/acceso.service';
   styleUrls: ['./sidebar.component.css'], // Ajusta el plural aquí
 })
 export class SidebarComponent {
-  isCollapsed = false; // Controla el estado colapsado de la barra lateral
-  accesos: Acceso[] = []; // Lista de accesos obtenidos del backend
-  rolSinPrefijo: string = ''; // Rol del usuario sin prefijo
+  isCollapsed = false;
+  accesos: Acceso[] = [];
+  rolSinPrefijo: string = '';
 
   constructor(
     private authService: AuthService,
@@ -28,7 +28,6 @@ export class SidebarComponent {
   }
   
   /**
-   * Maneja la navegación al seleccionar un subacceso.
    * @param url URL del subacceso seleccionado.
    */
   navigateTo(url: string): void {
@@ -39,21 +38,15 @@ export class SidebarComponent {
 
   @Output() toggle = new EventEmitter<boolean>();
 
-  /**
-   * Alterna el estado colapsado de la barra lateral.
-   */
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
     this.toggle.emit(this.isCollapsed);
   }
 
-  /**
-   * Obtiene los accesos según el rol del usuario al inicializar el componente.
-   */
   ngOnInit(): void {
     const roles = this.authService.getRolesSinPrefijo();
     if (roles.length > 0) {
-      this.rolSinPrefijo = roles[0]; // Usa el primer rol disponible
+      this.rolSinPrefijo = roles[0]; 
       this.obtenerAccesosPorRol(this.rolSinPrefijo);
     } else {
       console.error('No se encontraron roles en el token.');
@@ -61,16 +54,16 @@ export class SidebarComponent {
   }
 
   /**
-   * Llama al servicio para obtener los accesos según el rol.
+   * 
    * @param rol Rol del usuario.
    */
   obtenerAccesosPorRol(rol: string): void {
     this.accesoService.getAccesosPorRol(rol).subscribe({
-      next: (data: Acceso[]) => { // Tipado explícito para 'data'
+      next: (data: Acceso[]) => {
         this.accesos = this.organizarAccesos(data);
         console.log('Accesos obtenidos:', this.accesos);
       },
-      error: (err: any) => { // Tipado explícito para 'err'
+      error: (err: any) => { 
         console.error('Error al obtener accesos por rol:', err);
       },
     });
@@ -78,16 +71,14 @@ export class SidebarComponent {
   
 
   /**
-   * Organiza la estructura jerárquica de accesos para asegurar que los subaccesos se asocien correctamente.
-   * @param accesos Lista de accesos obtenidos del backend.
-   * @returns Lista de accesos principales con subaccesos organizados.
+   * @param accesos 
+   * @returns
    */
   private organizarAccesos(accesos: Acceso[]): Acceso[] {
     const accesoMap = new Map<number, Acceso>();
   
-    // Crear un mapa de accesos por ID
     accesos.forEach((acceso) => {
-      acceso.subAccesos = []; // Inicializa el arreglo de subAccesos
+      acceso.subAccesos = []; 
       accesoMap.set(acceso.idAcceso, acceso);
     });
   
@@ -103,23 +94,19 @@ export class SidebarComponent {
         if (padre) {
           padre.subAccesos = padre.subAccesos || [];
           padre.subAccesos.push(acceso);
-          padre.subAccesos.sort((a, b) => a.idAcceso - b.idAcceso); // Ordenar subAccesos por idAcceso
+          padre.subAccesos.sort((a, b) => a.idAcceso - b.idAcceso); 
         }
       } else {
         accesosPrincipales.push(acceso);
       }
     });
   
-    // Ordenar accesos principales antes de devolver
     return accesosPrincipales.sort((a, b) => a.idAcceso - b.idAcceso);
   }
   
 
 
 
-  /**
-   * Cierra sesión y redirige al login.
-   */
   logout() {
     this.authService.logout();
   }
@@ -129,7 +116,7 @@ export class SidebarComponent {
     const selectedUrl = selectElement.value;
   
     if (selectedUrl) {
-      this.navigateTo(selectedUrl); // Navegar a la URL seleccionada
+      this.navigateTo(selectedUrl); 
     }
   }
   

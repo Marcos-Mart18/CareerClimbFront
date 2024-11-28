@@ -29,7 +29,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class CarreraComponent {
   carreras: Carrera[] = [];
-  carrera: Carrera = new Carrera(0, '', '', 0, ''); // Modelo inicial
+  carrera: Carrera = new Carrera(0, '', '', 0, '');
   visible: boolean = false;
   isEditing: boolean = false;
 
@@ -46,7 +46,7 @@ export class CarreraComponent {
   listarCarreras(): void {
     this.carreraService.getCarreras().subscribe({
       next: (data: Carrera[]) => {
-        this.carreras = data.sort((a, b) => a.idCarrera - b.idCarrera); // Ordena por ID
+        this.carreras = data.sort((a, b) => a.idCarrera - b.idCarrera);
       },
       error: (error) => {
         console.error('Error al obtener las carreras', error);
@@ -55,7 +55,7 @@ export class CarreraComponent {
   }
 
   showDialogCreate(): void {
-    this.carrera = new Carrera(0, '', '', 0, ''); // Inicializa el modelo vacío
+    this.carrera = new Carrera(0, '', '', 0, ''); 
     this.visible = true;
     this.isEditing = false;
   }
@@ -63,7 +63,7 @@ export class CarreraComponent {
   showDialogEdit(id: number): void {
     this.carreraService.getCarreraById(id).subscribe({
       next: (data) => {
-        this.carrera = { ...data }; // Asigna datos del backend
+        this.carrera = { ...data }; 
         this.visible = true;
         this.isEditing = true;
       },

@@ -15,8 +15,8 @@ import { RubroComponent } from './component/rubro/rubro.component';
 import { CargoComponent } from './component/cargo/cargo.component';
 import { SoliCordComponent } from './compWeb/soli-cord/soli-cord.component';
 import { ConsolidadoComponent } from './component/consolidado/consolidado.component';
-import { ImgPerfilComponent } from './component/img-perfil/img-perfil.component';
 import { GestionAccesosRolesComponent } from './component/gestion-accesos-roles/gestion-accesos-roles.component';
+import { DocComponent } from './component/doc/doc.component';
 
 export const routes: Routes = [
     {
@@ -87,13 +87,13 @@ export const routes: Routes = [
         title:'Página consolidado'
         },
         {
-        path:'perfilUsuario',
-        component: ImgPerfilComponent,
-        title:'Página Perfil'
-        },
-        {
             path: 'gestionPermisos',
             component: GestionAccesosRolesComponent,
+        title: 'Página Gestion de Permisos',
+        },
+        {
+            path: 'documentos',
+            component: DocComponent,
         title: 'Página Gestion de Permisos',
         }
     ],

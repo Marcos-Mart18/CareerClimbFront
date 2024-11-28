@@ -1,50 +1,49 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Consolidado } from '../model/consolidado';
+import { Doc } from '../model/doc'; 
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConsolidadoService {
-  private baseUrl = 'http://localhost:8080/api/fileManager';
+export class DocService {
+  private baseUrl = 'http://localhost:8080/api/docManager'; 
 
   constructor(private http: HttpClient) {}
 
-  getFiles(): Observable<Consolidado[]> {
-    return this.http.get<Consolidado[]>(`${this.baseUrl}/files`).pipe(
+  getFiles(): Observable<Doc[]> {
+    return this.http.get<Doc[]>(`${this.baseUrl}/files`).pipe(
       map((data: any[]) =>
         data.map(
           (file) =>
-            new Consolidado(
+            new Doc(
               file.id,
               file.name,
               file.url,
               file.type,
               file.size,
-              file.fechaSubida, 
+              file.fechaSubida,
               0, 
-              file.detallePPPId 
+              file.idDetalleDoc 
             )
         )
       )
     );
   }
 
-  getFileMetadata(id: number): Observable<Consolidado> {
-    return this.http.get<Consolidado>(`${this.baseUrl}/files/${id}`).pipe(
+  getFileMetadata(id: number): Observable<Doc> {
+    return this.http.get<Doc>(`${this.baseUrl}/files/${id}`).pipe(
       map(
         (file) =>
-          new Consolidado(
+          new Doc(
             file.id,
             file.name,
             file.url,
             file.type,
             file.size,
             file.fechaSubida,
-            0,
-            file.idPPP
-          )
+            0, 
+            file.idDetalleDoc          )
       )
     );
   }
@@ -54,12 +53,12 @@ export class ConsolidadoService {
     return this.http.get(url, { responseType: 'blob' }); 
   }
 
-  uploadFiles(files: File[], idPPP?: number): Observable<string[]> {
+  uploadFiles(files: File[], idDetalleDoc?: number): Observable<string[]> {
     const formData = new FormData();
     files.forEach((file) => formData.append('file', file, file.name));
 
-    if (idPPP !== undefined && idPPP !== null) {
-      formData.append('detallePPPId', idPPP.toString());
+    if (idDetalleDoc !== undefined && idDetalleDoc !== null) {
+      formData.append('idDetalleDoc', idDetalleDoc.toString());
     }
 
     return this.http

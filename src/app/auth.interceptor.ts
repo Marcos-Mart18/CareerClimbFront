@@ -4,15 +4,13 @@ import { AuthService } from './auth.service';
 import { catchError, switchMap, throwError, of } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService); // Inyectar el servicio de autenticación
-  const accessToken = authService.getAccessToken(); // Obtener el token actual
+  const authService = inject(AuthService); 
+  const accessToken = authService.getAccessToken(); 
 
-  // Excluir solicitudes a /refresh y /logout del interceptor
   if (req.url.includes('/refresh') || req.url.includes('/logout')) {
     return next(req);
   }
 
-  // Si hay un access token, clonamos la solicitud para agregar el Authorization header
   if (accessToken) {
     const clonedRequest = req.clone({
       setHeaders: {
@@ -21,9 +19,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     });
 
     return next(clonedRequest).pipe(
-      // Manejar errores de la solicitud
       catchError((error) => {
-        // Si el token ha expirado (401), intentar renovar el token
         if (error.status === 401) {
           console.warn('Token expirado. Intentando renovar...');
 
@@ -31,7 +27,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             switchMap((newAccessToken) => {
               if (newAccessToken) {
                 console.info('Token renovado exitosamente.');
-                // Clonar nuevamente la solicitud con el nuevo token
                 const newRequest = req.clone({
                   setHeaders: {
                     Authorization: `Bearer ${newAccessToken}`,
@@ -49,7 +44,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
                 );
               }
             }),
-            // Si ocurre un error al intentar renovar el token
             catchError(() => {
               console.error(
                 'Error al intentar renovar el token. Cerrando sesión.'

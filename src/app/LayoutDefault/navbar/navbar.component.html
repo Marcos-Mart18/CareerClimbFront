@@ -12,8 +12,8 @@
     </div>    
     
 
-        <div class="profile-section">
-            <img src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" alt="Avatar" class="avatar">
+        <div class="profile-section" [routerLink]="'/layout'">
+            <img src="assets/userDefault.png" alt="Avatar" class="avatar">
             <div class="profile-info">
                 <span class="name">{{ fullName}}</span>
                 <span class="role" *ngIf="isStudent">Estudiante</span>

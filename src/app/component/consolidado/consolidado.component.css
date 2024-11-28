@@ -1,4 +1,3 @@
-/* Contenedor Principal */
 .main-container {
     display: flex;
     gap: 20px;
@@ -12,8 +11,8 @@
   }
   
   .table-container {
-    flex: 1.5; /* Reduce el tamaño de la tabla */
-    max-width: 60%; /* Limita el ancho máximo de la tabla */
+    flex: 1.5; 
+    max-width: 60%; 
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -22,7 +21,7 @@
   
   .upload-container {
     flex: 1;
-    max-width: 35%; /* Limita el ancho máximo del contenedor de subida */
+    max-width: 35%; 
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -30,7 +29,7 @@
     font-family: "Arial", sans-serif;
   }
   
-  /* Estilos del Contenedor de Subida de Archivos */
+
   .upload-container h3 {
     text-align: center;
     color: #2c3e50;
@@ -39,7 +38,7 @@
     font-weight: bold;
   }
   
-  /* Cabecera de la tarea */
+  
   .task-header {
     display: flex;
     align-items: center;
@@ -61,7 +60,6 @@
     text-transform: uppercase;
   }
   
-  /* Información de archivos subidos */
   .files-uploaded {
     font-size: 0.8em;
     color: #888;
@@ -70,7 +68,6 @@
     width: 100%;
   }
   
-  /* Área de adjuntar archivo */
   .file-upload {
     display: flex;
     align-items: center;
@@ -101,7 +98,6 @@
     display: none;
   }
   
-  /* Contenedor del archivo con barra de progreso */
   .file-info {
     display: flex;
     align-items: center;
@@ -142,7 +138,6 @@
     text-transform: capitalize;
   }
   
-  /* Barra de progreso en la parte inferior del archivo */
   .progress-bar {
     position: absolute;
     bottom: 0;
@@ -160,7 +155,6 @@
     transition: width 0.3s ease;
   }
   
-  /* Ocultar botones de acción en el contenedor de subida por defecto */
   .file-actions {
     display: none;
     gap: 10px;
@@ -168,21 +162,18 @@
     align-items: center;
   }
   
-  /* Mostrar botones de acción solo al hacer hover sobre el contenedor de archivo */
   .file-info:hover .file-actions {
     display: flex;
   }
   
-  /* Estilos para los botones de acción en la columna de "Acciones" de la tabla */
   .table-container .file-actions {
     display: flex;
-    flex-direction: row; /* Alinea los botones en fila horizontal */
+    flex-direction: row; 
     gap: 10px;
     justify-content: center;
     align-items: center;
   }
   
-  /* Estilos para los botones de acción */
   .p-button-rounded {
     width: 30px;
     height: 30px;
@@ -203,30 +194,27 @@
     justify-content: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: background 0.3s ease;
-    line-height: 0; /* Asegura el centrado del icono */
+    line-height: 0; 
   }
   
   .action-button:hover {
     background: #3a7dcf;
   }
   
-  /* Iconos dentro del botón de acción */
   .action-button .pi {
     font-size: 1rem;
     color: white;
   }
   
-  /* Asegura el centrado vertical de los botones en la columna de acciones */
   .actions-column {
     display: flex;
-    align-items: center; /* Centrado vertical */
-    justify-content: center; /* Centrado horizontal */
+    align-items: center; 
+    justify-content: center; 
     gap: 10px;
     height: 100%;
-    vertical-align: middle; /* Asegura el alineamiento vertical en toda la celda */
+    vertical-align: middle; 
   }
   
-  /* Botón de "ENTREGAR MI TRABAJO" */
   .submit-button {
     background-color: #4a90e2;
     color: #fff;

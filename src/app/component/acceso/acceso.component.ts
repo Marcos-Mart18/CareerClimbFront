@@ -86,9 +86,9 @@ export class AccesoComponent {
   
   actualizarAccesoPadre(idAccesoSeleccionado: number): void {
     if (idAccesoSeleccionado) {
-      this.acceso.accesoPadre = { idAcceso: idAccesoSeleccionado }; // Asigna solo el ID
+      this.acceso.accesoPadre = { idAcceso: idAccesoSeleccionado }; 
     } else {
-      this.acceso.accesoPadre = undefined; // Maneja el caso en el que no haya selección
+      this.acceso.accesoPadre = undefined; 
     }
   }
   
@@ -110,7 +110,7 @@ export class AccesoComponent {
   showDialogCreate(): void {
     this.visible = true;
     this.acceso = new Acceso(0, '', '', '', 'A', null, [], false);
-    this.selectedAccesoPadreId = null; // Ningún acceso padre seleccionado
+    this.selectedAccesoPadreId = null; 
     this.isEditing = false;
   }
   
@@ -128,7 +128,7 @@ export class AccesoComponent {
           data.subAccesos || [],
           data.isExpanded
         );
-        this.selectedAccesoPadreId = data.accesoPadre?.idAcceso || null; // Asigna el ID del padre
+        this.selectedAccesoPadreId = data.accesoPadre?.idAcceso || null; 
         this.visible = true;
         this.isEditing = true;
       },
@@ -167,18 +167,15 @@ export class AccesoComponent {
   guardarAcceso(): void {
     const accesoParaGuardar = { ...this.acceso };
   
-    // Validar y transformar accesoPadre
     accesoParaGuardar.accesoPadre = this.selectedAccesoPadreId
       ? { idAcceso: this.selectedAccesoPadreId }
-      : null; // Asignar null si no hay selección
+      : null; 
   
-    // Eliminar atributos innecesarios
     delete accesoParaGuardar.subAccesos;
     delete accesoParaGuardar.isExpanded;
   
     console.log('Objeto enviado:', accesoParaGuardar);
   
-    // Determina si se está editando o creando
     const request = this.isEditing
       ? this.accesoService.editarAcceso(accesoParaGuardar)
       : this.accesoService.crearAcceso(accesoParaGuardar);
@@ -190,8 +187,8 @@ export class AccesoComponent {
           summary: 'Correcto',
           detail: this.isEditing ? 'Acceso actualizado' : 'Acceso creado',
         });
-        this.listarAccesos(); // Refresca la lista de accesos
-        this.visible = false; // Cierra el diálogo
+        this.listarAccesos(); 
+        this.visible = false; 
       },
       error: (err) => {
         console.error('Error al guardar acceso:', err);

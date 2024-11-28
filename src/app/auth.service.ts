@@ -9,7 +9,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth'; // URL del API
+  private apiUrl = 'http://localhost:8080/api/auth'; 
 
   constructor(
     private http: HttpClient,
@@ -17,7 +17,6 @@ export class AuthService {
     private jwtHelper: JwtHelperService
   ) {}
 
-  /** Método para login */
   login(credentials: {
     username: string;
     password: string;
@@ -39,20 +38,18 @@ export class AuthService {
       );
   }
 
-  /** Método para logout */
   logout(): void {
     const refreshToken = this.getRefreshToken();
-    this.clearTokens(); // Limpiar tokens antes de redirigir
+    this.clearTokens(); // Limpia tokens 
     if (refreshToken) {
       this.http.post(`${this.apiUrl}/logout`, { refreshToken }).subscribe({
         next: () => console.info('Sesión cerrada con éxito.'),
         error: (err) => console.error('Error al cerrar sesión:', err),
       });
     }
-    this.router.navigate(['']); // Redirigir al login
+    this.router.navigate(['']); 
   }
 
-  /** Método para renovar el Access Token */
   refreshAccessToken(): Observable<string | null> {
     const refreshToken = this.getRefreshToken();
     if (!refreshToken) {
@@ -78,20 +75,18 @@ export class AuthService {
       );
   }
 
-  /** Obtener el nombre completo desde el token */
+
   getFullName(): string | null {
     const token = this.getAccessToken();
     if (!token || this.jwtHelper.isTokenExpired(token)) return null;
     return this.jwtHelper.decodeToken(token)?.nombreCompleto || null;
   }
 
-  /** Verificar si el usuario está autenticado */
   isAuthenticated(): boolean {
     const token = this.getAccessToken();
     return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
-  /** Obtener roles del token */
   getRoles(): string[] {
     const token = this.getAccessToken();
     if (!token) return [];
@@ -103,12 +98,10 @@ export class AuthService {
     }
   }
 
-  /** Verificar si el usuario tiene un rol específico */
   hasRole(role: string): boolean {
     return this.getRoles().includes(role);
   }
 
-  /** Manejo de almacenamiento */
   private setAccessToken(token: string): void {
     sessionStorage.setItem('accessToken', token);
   }
@@ -122,10 +115,10 @@ export class AuthService {
     return localStorage.getItem('refreshToken');
   }
   public getRolesSinPrefijo(): string[] {
-    const roles = this.getRoles(); // Obtener los roles con prefijo
+    const roles = this.getRoles(); 
     return roles.map((role) =>
       role.startsWith('ROLE_') ? role.substring(5) : role
-    ); // Remover el prefijo "ROLE_"
+    ); 
   }
 
   private clearTokens(): void {

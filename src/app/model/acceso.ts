@@ -4,8 +4,8 @@ export class Acceso {
   url: string;
   icono: string;
   isActive: string;
-  accesoPadre?: { idAcceso: number } | null; // Permite null
-  subAccesos?: Acceso[]; // Ahora es opcional
+  accesoPadre?: { idAcceso: number } | null; 
+  subAccesos?: Acceso[]; 
   isExpanded?: boolean;
 
   constructor(
