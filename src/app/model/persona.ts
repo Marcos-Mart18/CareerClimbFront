@@ -1,22 +1,24 @@
 export class Persona {
-    idPersona: number;
-    nombres: string;
-    apellidos:string;
-    dni:string;
-    email:string;
-    telefono:string;
-    direccion:string;
-    isActive:string;
+  idPersona: number;
+  nombres: string;
+  apellidos: string;
+  telefono: string;
+  dni: string;
+  isActive: string;
 
-    constructor(idPersona: number, nombres: string, apellidos:string, dni:string, email:string, telefono:string, direccion:string, isActive:string){
-        this.idPersona = idPersona;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.dni = dni;
-        this.email = email;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.isActive = isActive;
-    }
-
+  constructor(
+    idPersona: number,
+    nombres: string,
+    apellidos: string,
+    telefono: string,
+    dni: string,
+    isActive: string
+  ) {
+    this.idPersona = idPersona;
+    this.nombres = nombres;
+    this.apellidos = apellidos;
+    this.telefono = telefono;
+    this.dni = dni;
+    this.isActive = isActive;
+  }
 }

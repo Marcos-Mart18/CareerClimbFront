@@ -2,6 +2,7 @@
   class="flex justify-content-center align-items-center flex-column"
   style="margin: 20px"
 >
+  <!-- Botón para Crear -->
   <button
     pButton
     pRipple
@@ -11,6 +12,7 @@
     (click)="showDialogCreate()"
   ></button>
 
+  <!-- Tabla de Datos -->
   <p-table [value]="relaciones" [tableStyle]="{ 'min-width': '10rem' }">
     <ng-template pTemplate="header">
       <tr>
@@ -40,32 +42,37 @@
   </p-table>
 </div>
 
+<!-- Diálogo para Crear/Editar -->
 <p-dialog
   header="{{ isEditing ? 'Editar Relación' : 'Crear Relación' }}"
   [(visible)]="visible"
   [modal]="true"
+  [style]="{ width: '30vw' }"
 >
-<div class="field">
-    <label for="acceso">Acceso</label>
-    <p-dropdown
-      [options]="accesos"
-      [(ngModel)]="relacion.acceso"
-      optionLabel="titulo"
-      placeholder="Seleccione un acceso"
-      inputId="acceso"
-    ></p-dropdown>
+  <div class="p-fluid">
+    <div class="field">
+      <label for="acceso">Acceso</label>
+      <p-dropdown
+        [options]="accesos"
+        [(ngModel)]="relacion.acceso"
+        optionLabel="titulo"
+        placeholder="Seleccione un acceso"
+        inputId="acceso"
+      ></p-dropdown>
+    </div>
+    <div class="field">
+      <label for="rol">Rol</label>
+      <p-dropdown
+        [options]="roles"
+        [(ngModel)]="relacion.rol"
+        optionLabel="nombre"
+        placeholder="Seleccione un rol"
+        inputId="rol"
+      ></p-dropdown>
+    </div>
   </div>
-  <div class="field">
-    <label for="rol">Rol</label>
-    <p-dropdown
-      [options]="roles"
-      [(ngModel)]="relacion.rol"
-      optionLabel="nombre"
-      placeholder="Seleccione un rol"
-      inputId="rol"
-    ></p-dropdown>
+
+  <div class="flex justify-content-end">
+    <button pButton label="Guardar" (click)="guardarRelacion()"></button>
   </div>
-  
-  
-  <button pButton label="Guardar" (click)="guardarRelacion()"></button>
 </p-dialog>

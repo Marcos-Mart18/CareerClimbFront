@@ -1,14 +1,13 @@
 export class RegisterDto {
-    name: string;
-    username: string;
     email: string;
     password: string;
     roleName: string;
-    constructor(name: string, username: string, email: string, password: string, roleName: string) {
-        this.name = name;
-        this.username = username;
+    idPersona:number;
+    
+    constructor(email: string, password: string, roleName: string, idPersona:number) {
         this.email = email;
         this.password = password;
         this.roleName = roleName;
+        this.idPersona = idPersona;
     }
 }

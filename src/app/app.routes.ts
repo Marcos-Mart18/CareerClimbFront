@@ -16,7 +16,9 @@ import { CargoComponent } from './component/cargo/cargo.component';
 import { SoliCordComponent } from './compWeb/soli-cord/soli-cord.component';
 import { ConsolidadoComponent } from './component/consolidado/consolidado.component';
 import { GestionAccesosRolesComponent } from './component/gestion-accesos-roles/gestion-accesos-roles.component';
+import { UsuarioRolComponent } from './component/usuario-rol/usuario-rol.component';
 import { DocComponent } from './component/doc/doc.component';
+import { PersonaComponent } from './component/persona/persona.component';
 
 export const routes: Routes = [
     {
@@ -45,7 +47,12 @@ export const routes: Routes = [
     path: 'layout',
     component: LayoutComponent,
     // canActivate: [AuthGuard] ,
-    children: [
+        children: [
+        {
+            path: 'inicio',
+            component: HomeComponent,
+            title: 'Inicio',
+        },
         {
         path: 'insertarDatos',
         component: InsertarDatosComponent,
@@ -87,15 +94,25 @@ export const routes: Routes = [
         title:'Página consolidado'
         },
         {
-            path: 'gestionPermisos',
-            component: GestionAccesosRolesComponent,
+        path: 'gestionPermisos',
+        component: GestionAccesosRolesComponent,
         title: 'Página Gestion de Permisos',
         },
         {
             path: 'documentos',
             component: DocComponent,
-        title: 'Página Gestion de Permisos',
-        }
+            title: 'Página Gestion de Permisos',
+        },
+        {
+            path: 'gestionarUsuarios',
+            component: UsuarioRolComponent,
+            title: 'Página Gestion de Usuarios',
+        },
+        {
+            path: 'personas',
+            component: PersonaComponent,
+            title: 'Página Gestion Personas',
+        },
     ],
 },
 {

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, map, tap } from 'rxjs/operators';
+import { RegisterDto } from './dto/register-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +38,21 @@ export class AuthService {
         })
       );
   }
+
+  register(registerDto: RegisterDto): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, registerDto)
+      .pipe(
+        tap(response => {
+          console.log('Registro exitoso:', response);
+          // Puedes redirigir o hacer alguna acción adicional
+        }),
+        catchError((error) => {
+          console.error('Error al registrar usuario:', error);
+          return of(error); // Retorna un error si algo falla
+        })
+      );
+  }
+  
 
   logout(): void {
     const refreshToken = this.getRefreshToken();

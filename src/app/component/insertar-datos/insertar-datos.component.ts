@@ -15,6 +15,7 @@ export class InsertarDatosComponent {
   selectedFile: File | null = null;
   uploadSuccess: boolean = false;
   errorMessage: string = '';
+  isUploading: boolean = false;  // Nueva variable para controlar el estado de carga
 
   constructor(private insertarDatosService: InsertarDatosService) {}
 
@@ -24,8 +25,7 @@ export class InsertarDatosComponent {
     const allowedExtensions = /(\.xlsx|\.xls)$/i;
 
     if (!allowedExtensions.exec(file.name)) {
-      this.errorMessage =
-        'Solo se permiten archivos de tipo Excel (.xlsx, .xls).';
+      this.errorMessage = 'Solo se permiten archivos de tipo Excel (.xlsx, .xls).';
       this.uploadSuccess = false;
       this.selectedFile = null;
       return;
@@ -46,16 +46,19 @@ export class InsertarDatosComponent {
   startUpload(): void {
     if (!this.selectedFile) return;
 
+    this.isUploading = true;  // Activar el overlay de carga
+
     this.insertarDatosService.uploadFile(this.selectedFile).subscribe({
       next: () => {
         this.uploadSuccess = true;
         this.errorMessage = '';
         this.selectedFile = null;
+        this.isUploading = false;  // Desactivar el overlay de carga
       },
       error: () => {
-        this.errorMessage =
-          'Hubo un error al subir el archivo. Inténtalo de nuevo.';
+        this.errorMessage = 'Hubo un error al subir el archivo. Inténtalo de nuevo.';
         this.uploadSuccess = false;
+        this.isUploading = false;  // Desactivar el overlay de carga
       },
     });
   }
