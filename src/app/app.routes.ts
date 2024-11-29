@@ -19,6 +19,8 @@ import { GestionAccesosRolesComponent } from './component/gestion-accesos-roles/
 import { UsuarioRolComponent } from './component/usuario-rol/usuario-rol.component';
 import { DocComponent } from './component/doc/doc.component';
 import { PersonaComponent } from './component/persona/persona.component';
+import { UnauthorizedComponent } from './compWeb/unauthorized/unauthorized.component';
+import { roleGuard } from './role.guard';
 
 export const routes: Routes = [
     {
@@ -27,26 +29,26 @@ export const routes: Routes = [
     title: 'Login',
     },
     {
-        path: 'solicitud',
-    component: SolicitudComponent,
-    title: 'Página solicitud',
-    canActivate: [AuthGuard],
+        path: 'unauthorized',
+        component: UnauthorizedComponent,
     },
     {
         path: 'ppp',
         component: PPPComponent,
         title: 'Página PPP',
+        canActivate: [roleGuard],
+        data: { roles: ['ESTUDIANTE'] }
     },
     {
     path: 'dashboard',
     component: DashboardComponent,
     title: 'Dashboard',
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
     },
     {
     path: 'layout',
     component: LayoutComponent,
-    // canActivate: [AuthGuard] ,
+    canActivate: [AuthGuard] ,
         children: [
         {
             path: 'inicio',
@@ -57,67 +59,91 @@ export const routes: Routes = [
         path: 'insertarDatos',
         component: InsertarDatosComponent,
         title: 'Página InsertarDatos',
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] }
         },
         {
         path: 'accesos',
         component: AccesoComponent,
         title: 'Página accesos',
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] }
         },
         {
             path: 'roles',
         component: RolComponent,
         title: 'Página roles',
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] }
         },
         {
         path: 'carreras',
         component: CarreraComponent,
         title: 'Página carreras',
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] }
         },
         {
         path: 'rubros',
         component: RubroComponent,
         title: 'Página rubros',
+        canActivate: [roleGuard],
+        data: { roles: ['COORDINADORPPP'] }
         },
         {
         path: 'cargos',
         component: CargoComponent,
         title: 'Página cargos',
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] }
         },
         {
         path:'solicitudes-practica',
         component: SoliCordComponent,
-        title:'Página SolicitudCord'
+        title:'Página SolicitudCord',
+        canActivate: [roleGuard],
+        data: { roles: ['COORDINADORPPP'] }
         },
         {
         path:'consolidado',
         component: ConsolidadoComponent,
-        title:'Página consolidado'
+        title:'Página consolidado',
+        canActivate: [roleGuard],
+        data: { roles: ['COORDINADORPPP'] }
         },
         {
         path: 'gestionPermisos',
         component: GestionAccesosRolesComponent,
         title: 'Página Gestion de Permisos',
+        canActivate: [roleGuard],
+        data: { roles: ['ADMIN'] }
         },
         {
             path: 'documentos',
             component: DocComponent,
-            title: 'Página Gestion de Permisos',
+            title: 'Página Gestion de documentos',
+            canActivate: [roleGuard],
+            data: { roles: ['ESTUDIANTE'] }
         },
         {
             path: 'gestionarUsuarios',
             component: UsuarioRolComponent,
             title: 'Página Gestion de Usuarios',
+            canActivate: [roleGuard],
+            data: { roles: ['SECRETARIA'] }
         },
         {
             path: 'personas',
             component: PersonaComponent,
             title: 'Página Gestion Personas',
+            canActivate: [roleGuard],
+            data: { roles: ['SECRETARIA'] }
         },
     ],
-},
-{
-    path: '**',
-    redirectTo: '',
-    pathMatch: 'full',
-},
+    },
+    {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full',
+    },
 ];
