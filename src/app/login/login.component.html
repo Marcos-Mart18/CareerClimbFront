@@ -1,52 +1,65 @@
 <div class="container" *ngIf="!isLoading; else loadingTemplate">
     <div class="img">
-        <img src="assets/LogoUpeu.png" alt="Logo">
-        <img src="assets/careerclimb.png" alt="career">
+        <img src="assets/LogoUpeu.png" alt="Logo" />
+        <img src="assets/careerclimb.png" alt="career" />
     </div>
-    <form class="form" (ngSubmit)="onSubmit()">
+    <form class="form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
         <p class="form-title">Por favor, identifíquese</p>
+        <!-- Campo Usuario -->
         <div class="input-container">
-            <input  
-                type="text"
-                placeholder="Usuario"
-                [(ngModel)]="loginDto.username"
-                name="username"
-                required
+            <input
+            type="text"
+            placeholder="Usuario"
+            [(ngModel)]="loginDto.username"
+            name="username"
+            #username="ngModel"
+            required
             />
+            <!-- Mensaje de error -->
+            <p *ngIf="loginForm.submitted && username.invalid" class="error-message">
+            El campo Usuario es requerido.
+            </p>
         </div>
+    
+        <!-- Campo Contraseña -->
         <div class="input-container password-container">
             <input
-                [type]="showPassword ? 'text' : 'password'"
-                placeholder="Contraseña"
-                [(ngModel)]="loginDto.password"
-                name="password"
-                required
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Contraseña"
+            [(ngModel)]="loginDto.password"
+            name="password"
+            #password="ngModel"
+            required
             />
-            <i 
-                class="toggle-password-icon"
-                [ngClass]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"
-                (click)="togglePasswordVisibility()"
+            <i
+            class="toggle-password-icon"
+            [ngClass]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"
+            (click)="togglePasswordVisibility()"
             ></i>
+            <!-- Mensaje de error -->
+            <p *ngIf="loginForm.submitted && password.invalid" class="error-message">
+            El campo Contraseña es requerido.
+            </p>
         </div>
-
-        <!-- Mensaje de error -->
+    
+        <!-- Mensaje de error general -->
         <p *ngIf="errorMessage" class="error-message">
             {{ errorMessage }}
         </p>
-
+    
         <button type="submit" class="submit">Iniciar Sesión</button>
-
+    
         <p class="signup-link">
             ¿No estás registrado?
             <a href="asd">Contáctanos</a>
         </p>
     </form>
-</div>
-
-<!-- Plantilla de carga -->
-<ng-template #loadingTemplate>
-    <div class="loading-screen">
+    </div>
+    
+    <!-- Plantilla de carga -->
+    <ng-template #loadingTemplate>
+        <div class="loading-screen">
         <p>Espere, procesando su solicitud...</p>
         <div class="spinner"></div>
-    </div>
+        </div>
 </ng-template>

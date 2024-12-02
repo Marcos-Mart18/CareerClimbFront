@@ -21,6 +21,7 @@ import { DocComponent } from './component/doc/doc.component';
 import { PersonaComponent } from './component/persona/persona.component';
 import { UnauthorizedComponent } from './compWeb/unauthorized/unauthorized.component';
 import { roleGuard } from './role.guard';
+import { ErrorComponent } from './compWeb/error/error.component';
 
 export const routes: Routes = [
     {
@@ -36,7 +37,7 @@ export const routes: Routes = [
         path: 'ppp',
         component: PPPComponent,
         title: 'Página PPP',
-        canActivate: [roleGuard],
+        canActivate: [AuthGuard,roleGuard],
         data: { roles: ['ESTUDIANTE'] }
     },
     {
@@ -143,7 +144,7 @@ export const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: '',
         pathMatch: 'full',
+        component:ErrorComponent
     },
 ];

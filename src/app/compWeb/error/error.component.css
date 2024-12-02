@@ -1,0 +1,15 @@
+.error-page {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.error-page h1 {
+    font-size: 2rem;
+    color: #ff0000;
+}
+
+.error-page p {
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+

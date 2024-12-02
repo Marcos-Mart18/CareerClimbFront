@@ -10,18 +10,28 @@ import { RegisterDto } from './dto/register-dto';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth'; 
+  private apiUrl = 'http://localhost:8080/api/auth';
+  private isUserAuthenticated: boolean | null = null; // Estado en memoria para mejorar el rendimiento
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private jwtHelper: JwtHelperService
-  ) {}
+  ) {
+    // Escuchar cambios en localStorage para sincronizar autenticación entre pestañas
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'authToken') {
+        const token = localStorage.getItem('authToken');
+        if (token && this.isAuthenticated()) {
+          console.info('Sesión activa detectada en otra pestaña.');
+        } else {
+          this.logout(); // Cerrar sesión en todas las pestañas si el token no es válido
+        }
+      }
+    });
+  }
 
-  login(credentials: {
-    username: string;
-    password: string;
-  }): Observable<{ accessToken: string; refreshToken: string }> {
+  login(credentials: { username: string; password: string }): Observable<{ accessToken: string; refreshToken: string }> {
     return this.http
       .post<{ accessToken: string; refreshToken: string }>(
         `${this.apiUrl}/login`,
@@ -31,6 +41,7 @@ export class AuthService {
         tap((response) => {
           this.setAccessToken(response.accessToken);
           this.setRefreshToken(response.refreshToken);
+          console.info('Inicio de sesión exitoso.');
         }),
         catchError((error) => {
           console.error('Error en el login:', error);
@@ -40,30 +51,30 @@ export class AuthService {
   }
 
   register(registerDto: RegisterDto): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, registerDto)
+    return this.http
+      .post<any>(`${this.apiUrl}/register`, registerDto)
       .pipe(
-        tap(response => {
+        tap((response) => {
           console.log('Registro exitoso:', response);
-          // Puedes redirigir o hacer alguna acción adicional
         }),
         catchError((error) => {
           console.error('Error al registrar usuario:', error);
-          return of(error); // Retorna un error si algo falla
+          return of(error);
         })
       );
   }
-  
 
   logout(): void {
     const refreshToken = this.getRefreshToken();
-    this.clearTokens(); // Limpia tokens 
+    this.clearTokens(); // Limpia tokens
+    localStorage.removeItem('authToken'); // Sincroniza cierre de sesión
     if (refreshToken) {
       this.http.post(`${this.apiUrl}/logout`, { refreshToken }).subscribe({
         next: () => console.info('Sesión cerrada con éxito.'),
         error: (err) => console.error('Error al cerrar sesión:', err),
       });
     }
-    this.router.navigate(['']); 
+    this.router.navigate(['']); // Redirigir al login tras cerrar sesión
   }
 
   refreshAccessToken(): Observable<string | null> {
@@ -91,16 +102,20 @@ export class AuthService {
       );
   }
 
+  isAuthenticated(): boolean {
+    if (this.isUserAuthenticated !== null) {
+      return this.isUserAuthenticated;
+    }
+
+    const token = this.getAccessToken();
+    this.isUserAuthenticated = token ? !this.jwtHelper.isTokenExpired(token) : false;
+    return this.isUserAuthenticated;
+  }
 
   getFullName(): string | null {
     const token = this.getAccessToken();
     if (!token || this.jwtHelper.isTokenExpired(token)) return null;
     return this.jwtHelper.decodeToken(token)?.nombreCompleto || null;
-  }
-
-  isAuthenticated(): boolean {
-    const token = this.getAccessToken();
-    return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
 
   getRoles(): string[] {
@@ -120,25 +135,33 @@ export class AuthService {
 
   private setAccessToken(token: string): void {
     sessionStorage.setItem('accessToken', token);
+    localStorage.setItem('authToken', token); // Sincroniza con otras pestañas
+    this.isUserAuthenticated = true; // Actualiza el estado de autenticación
   }
+
   private setRefreshToken(token: string): void {
     localStorage.setItem('refreshToken', token);
   }
+
   public getAccessToken(): string | null {
-    return sessionStorage.getItem('accessToken');
+    return localStorage.getItem('authToken') || sessionStorage.getItem('accessToken');
   }
+
   public getRefreshToken(): string | null {
     return localStorage.getItem('refreshToken');
   }
+
   public getRolesSinPrefijo(): string[] {
-    const roles = this.getRoles(); 
+    const roles = this.getRoles();
     return roles.map((role) =>
       role.startsWith('ROLE_') ? role.substring(5) : role
-    ); 
+    );
   }
 
   private clearTokens(): void {
     sessionStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('authToken');
+    this.isUserAuthenticated = null; // Reinicia el estado de autenticación
   }
 }
